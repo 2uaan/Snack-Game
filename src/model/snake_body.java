@@ -4,13 +4,13 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
-public class snack_body {
+public class snake_body {
 	
 	private JButton body;
 	private int x,y;
 	private int nextx, nexty;
 	
-	public snack_body(JButton body, int x, int y, int nextx, int nexty) {
+	public snake_body(JButton body, int x, int y, int nextx, int nexty) {
 		super();
 		this.body = body;
 		this.x = x;
@@ -44,7 +44,7 @@ public class snack_body {
 
 
 
-	public snack_body() {
+	public snake_body() {
 		
 	}
 

@@ -10,13 +10,15 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-import model.snack_body;
+import model.*;
 import thread.start_game;
 
 public class gamePlayView extends JFrame{
 
 	private JButton playground[][] = new JButton[30][30];
-	private snack_body snack[];
+	private snake_body snake[];
+	private map map = new map();
+	private int[][] mapArr = map.map3;
 	
 	public static void main(String[] args) {
 		new gamePlayView().setVisible(true);
@@ -24,20 +26,12 @@ public class gamePlayView extends JFrame{
 	
 	public gamePlayView() {
 		JPanel frame = new JPanel();
-		snack = new snack_body[10];
-		snack[0] = new snack_body();
-		snack[0].setX(10);
-		snack[0].setY(10);
+		snake = new snake_body[20];
+		snake[0] = new snake_body();
+		snake[0].setX(10);
+		snake[0].setY(10);
 
-		snack[1] = new snack_body();
-		snack[2] = new snack_body();
-		snack[3] = new snack_body();
-		snack[4] = new snack_body();
-		snack[5] = new snack_body();
-		snack[7] = new snack_body();
-		snack[8] = new snack_body();
-		snack[9] = new snack_body();
-		snack[6] = new snack_body();
+		for (int i = 1; i < snake.length; i++) snake[i] = new snake_body();
 		
 		setTitle("Game Play");
 		setSize(610,635);
@@ -56,12 +50,13 @@ public class gamePlayView extends JFrame{
 				playground[x][y] = new JButton("");
 				playground[x][y].setMargin(new Insets(0, 0, 0, 0));
 				playground[x][y].setBorder(null);
-				playground[x][y].setBackground(Color.cyan);
+				if (mapArr[x][y] == 1) playground[x][y].setBackground(Color.DARK_GRAY);
+				else playground[x][y].setBackground(Color.CYAN);
 				frame.add(playground[x][y]);
 			}
 		}
 		
-		start_game sg = new start_game(playground, snack);
+		start_game sg = new start_game(this, playground, snake, mapArr);
 		sg.start();
 
 		

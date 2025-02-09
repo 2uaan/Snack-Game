@@ -4,23 +4,27 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-import model.snack_body;
+import model.snake_body;
 
 public class start_game extends Thread{
 	
 	private volatile boolean endgame;
 	private JButton[][] gameFrame;
-	private snack_body snack[];
+	private snake_body snake[];
 	private int speed;
 	private char direction;
+	private int[][] map;
+	private JFrame frame;
 	
-	public start_game(JButton[][] gameFrame, snack_body[] snack) {
+	public start_game(JFrame frame ,JButton[][] gameFrame, snake_body[] snake, int[][] map) {
 		super();
+		this.frame = frame;
 		this.endgame = false;
 		this.gameFrame = gameFrame;
-		this.snack = snack;
+		this.snake = snake;
 		this.direction = 'r';
 		this.speed = 500;
+		this.map = map;
 	}
 	
 	public void setDirection(char direction) {
@@ -51,30 +55,34 @@ public class start_game extends Thread{
 					case 'd':{ increx = 0; increy = 1; break;	}
 				}
 				
-				gameFrame[snack[snack.length-1].getX()][snack[snack.length-1].getY()].setBackground(Color.cyan);
+				gameFrame[snake[snake.length-1].getX()][snake[snake.length-1].getY()].setBackground(Color.cyan);
 				
-				snack[0].setNextx(snack[0].getX() + increx);
-				snack[0].setNexty(snack[0].getY() + increy);
+				snake[0].setNextx(snake[0].getX() + increx);
+				snake[0].setNexty(snake[0].getY() + increy);
 				
-				if (snack[0].getNextx() == gameFrame.length) snack[0].setNextx(0);
-				if (snack[0].getNexty() == gameFrame.length) snack[0].setNexty(0);
-				if (snack[0].getNextx() == -1) snack[0].setNextx(gameFrame.length-1);
-				if (snack[0].getNexty() == -1) snack[0].setNexty(gameFrame.length-1);
+				if (snake[0].getNextx() == gameFrame.length) snake[0].setNextx(0);
+				if (snake[0].getNexty() == gameFrame.length) snake[0].setNexty(0);
+				if (snake[0].getNextx() == -1) snake[0].setNextx(gameFrame.length-1);
+				if (snake[0].getNexty() == -1) snake[0].setNexty(gameFrame.length-1);
+				if (map[snake[0].getNextx()][snake[0].getNexty()] == 1) {
+					JOptionPane.showMessageDialog(frame,"You Lose", "Game Over", JOptionPane.WARNING_MESSAGE);
+					endgame = true;
+				}
 				
-				for (int i = 0; i<snack.length; i++) {
+				for (int i = 0; i<snake.length; i++) {
 					if (i != 0){
-						snack[i].setNextx(snack[i-1].getX());
-						snack[i].setNexty(snack[i-1].getY());
+						snake[i].setNextx(snake[i-1].getX());
+						snake[i].setNexty(snake[i-1].getY());
 					}
 					
 				}
 				
-				for (int i = 0; i<snack.length; i++) {
-					gameFrame[snack[i].getNextx()][snack[i].getNexty()].setBackground(Color.orange);
-					if (i == 0) gameFrame[snack[i].getNextx()][snack[i].getNexty()].setBackground(Color.red);
+				for (int i = 0; i<snake.length; i++) {
+					gameFrame[snake[i].getNextx()][snake[i].getNexty()].setBackground(Color.orange);
+					if (i == 0) gameFrame[snake[i].getNextx()][snake[i].getNexty()].setBackground(Color.red);
 					
-					snack[i].setX(snack[i].getNextx());
-					snack[i].setY(snack[i].getNexty());
+					snake[i].setX(snake[i].getNextx());
+					snake[i].setY(snake[i].getNexty());
 					
 				}
 				
