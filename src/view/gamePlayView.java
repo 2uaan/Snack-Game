@@ -7,7 +7,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.*;
 
 import model.*;
@@ -37,6 +36,7 @@ public class gamePlayView extends JFrame{
 		setSize(610,635);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(new ImageIcon("C:\\Users\\tlmqu\\OneDrive\\Desktop\\Java Project\\Snake_Game\\image\\snake.png").getImage());
 		setResizable(false);
 		
 		frame.setSize(this.getWidth(), this.getHeight());

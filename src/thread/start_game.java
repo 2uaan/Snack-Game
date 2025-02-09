@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.*;
 
 import model.snake_body;
+import view.gamePlayView;
 
 public class start_game extends Thread{
 	
@@ -67,6 +68,17 @@ public class start_game extends Thread{
 				if (map[snake[0].getNextx()][snake[0].getNexty()] == 1) {
 					JOptionPane.showMessageDialog(frame,"You Lose", "Game Over", JOptionPane.WARNING_MESSAGE);
 					endgame = true;
+					frame.setVisible(false);
+					new gamePlayView().setVisible(true);
+				}
+				
+				for (int i = 1; i < snake.length; i++) {
+					if (snake[0].getNextx() == snake[i].getX() && snake[0].getNexty() == snake[i].getY()) {
+						JOptionPane.showMessageDialog(frame,"You Lose", "Game Over", JOptionPane.WARNING_MESSAGE);
+						endgame = true;
+						frame.setVisible(false);
+						new gamePlayView().setVisible(true);
+					}
 				}
 				
 				for (int i = 0; i<snake.length; i++) {
