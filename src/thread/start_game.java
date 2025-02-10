@@ -1,6 +1,7 @@
 package thread;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import javax.swing.*;
 
@@ -47,16 +48,21 @@ public class start_game extends Thread{
 	@Override
 	public void run() {
 		while(!endgame) {
+			String way = "";
 			try {
 				int increx=0, increy=0;
 				switch (direction) {
-					case 'l':{ increx = -1; increy = 0; break;	}
-					case 'r':{ increx = 1; increy = 0; break;	}
-					case 'u':{ increx = 0; increy = -1; break;	}
-					case 'd':{ increx = 0; increy = 1; break;	}
+					case 'l':{ increx = -1; increy = 0; way = "left"; break;}
+					case 'r':{ increx = 1; increy = 0; way = "right"; break;	}
+					case 'u':{ increx = 0; increy = -1; way = "up"; break;	}
+					case 'd':{ increx = 0; increy = 1; way = "down"; break;	}
 				}
+				ImageIcon head = new ImageIcon("C:\\Users\\tlmqu\\OneDrive\\Desktop\\Java Project\\Snake_Game\\image\\snake_head_"+ way +".png");
+				Image temp = head.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+			
+				gameFrame[snake[snake.length-1].getX()][snake[snake.length-1].getY()].setBackground(new Color(0xFFFE91));
+				gameFrame[snake[snake.length-1].getX()][snake[snake.length-1].getY()].setIcon(null);
 				
-				gameFrame[snake[snake.length-1].getX()][snake[snake.length-1].getY()].setBackground(Color.cyan);
 				
 				snake[0].setNextx(snake[0].getX() + increx);
 				snake[0].setNexty(snake[0].getY() + increy);
@@ -90,8 +96,17 @@ public class start_game extends Thread{
 				}
 				
 				for (int i = 0; i<snake.length; i++) {
-					gameFrame[snake[i].getNextx()][snake[i].getNexty()].setBackground(Color.orange);
-					if (i == 0) gameFrame[snake[i].getNextx()][snake[i].getNexty()].setBackground(Color.red);
+					String bway = "";
+					int xx = snake[i].getNextx() - snake[i].getX(), 
+						yy = snake[i].getNexty() - snake[i].getY();
+					
+					if (xx == 0) bway = "ver";
+					else bway = "hor";
+					
+					ImageIcon body = new ImageIcon("C:\\Users\\tlmqu\\OneDrive\\Desktop\\Java Project\\Snake_Game\\image\\snake_body_"+bway+".png");
+					Image temp2 = body.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+					gameFrame[snake[i].getNextx()][snake[i].getNexty()].setIcon(new ImageIcon(temp2));
+					if (i == 0) gameFrame[snake[i].getNextx()][snake[i].getNexty()].setIcon(new ImageIcon(temp));
 					
 					snake[i].setX(snake[i].getNextx());
 					snake[i].setY(snake[i].getNexty());
